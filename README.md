@@ -7,5 +7,6 @@ Please note that PAMOJA is a research project and while we do endeavor to create
 
 # Contact
 Jackline Ssanyu
+
 jssanyu@kyu.ac.ug 
 
