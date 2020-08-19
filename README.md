@@ -13,5 +13,5 @@ jssanyu@kyu.ac.ug
 https://github.com/ssanyu
 
 # Documentation
-An overview of PAMOJA's capabilities, installation instructions and example usages can be found in the User Manual. PAMOJA's API documentation can be found in the [javadoc](http://google.com)
+An overview of PAMOJA's capabilities, installation instructions and example usages can be found in the User Manual. PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
 
