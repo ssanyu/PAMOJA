@@ -23,7 +23,9 @@ PAMOJA components have been packaged in a JAR and the wizards as NBM modules.
 
 # Documentation
 An overview of PAMOJA's capabilities, installation instructions and an example usage can be found in the [User Manual](https://github.com/ssanyu/PAMOJA/blob/master/manuals/PAMOJA_end_user_manual.pdf). PAMOJA has also been used to develop [non-trivial applications](https://github.com/ssanyu/PAMOJA#example-applications). PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
-
+- George Washington
+- John Adams
+- Thomas Jefferson
 # Example Applications
 PAMOJA is being used to develop a couple of non-trivial applications:
      * HybridEditor - A text/structure editor which can be adapted to a programming language. 
