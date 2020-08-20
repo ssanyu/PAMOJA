@@ -26,8 +26,7 @@ An overview of PAMOJA's capabilities, installation instructions and an example u
 
 # Example Applications
 PAMOJA is being used to develop a couple of non-trivial applications:
-
-    - HybridEditor - A text/structure editor component which can be adapted to a programming language
-    - Compiler Lab toolset - A toolset to support in the teaching of courses on language processing
+- HybridEditor - A text/structure editor component which can be adapted to a programming language
+- Compiler Lab toolset - A toolset to support in the teaching of courses on language processing
 
 
