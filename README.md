@@ -12,6 +12,21 @@ jssanyu@kyu.ac.ug
 
 https://github.com/ssanyu
 
+# Downloads
+PAMOJA components have been packaged in a JAR and the wizards as NBM modules.
+
+| Type          | Download |
+| ------------- | ------------- |
+| PAMOJA components  | [JAR](https://github.com/ssanyu/PAMOJA/blob/master/installations/PAMOJAComponents.jar)  |
+| Parser generator wizard       |[NBM](https://github.com/ssanyu/PAMOJA/blob/master/installations/org-parser-generatorWizard.nbm)|
+| SignatureAPI generator wizard  | [NBM](https://github.com/ssanyu/PAMOJA/blob/master/installations/org-signatureAPI-generatorWizard.nbm) |
+
 # Documentation
-An overview of PAMOJA's capabilities, installation instructions and example usages can be found in the User Manual. PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
+An overview of PAMOJA's capabilities, installation instructions and example usages can be found in the [User Manual](https://github.com/ssanyu/PAMOJA/blob/master/manuals/PAMOJA_end_user_manual.pdf). PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
+
+# Example Applications
+PAMOJA is being used to develop a couple of non-trivial applications:
+     - HybridEditor - A text/structure editor which can be adapted to a programming language. 
+     - Compiler Lab toolset - A toolset to support in the teaching of courses on language processing.
+
 
