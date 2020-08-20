@@ -22,7 +22,7 @@ PAMOJA components have been packaged in a JAR and the wizards as NBM modules.
 | SignatureAPI generator wizard  | [NBM](https://github.com/ssanyu/PAMOJA/blob/master/installations/org-signatureAPI-generatorWizard.nbm) |
 
 # Documentation
-An overview of PAMOJA's capabilities, installation instructions and example usages can be found in the [User Manual](https://github.com/ssanyu/PAMOJA/blob/master/manuals/PAMOJA_end_user_manual.pdf). PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
+An overview of PAMOJA's capabilities, installation instructions and an example usage can be found in the [User Manual](https://github.com/ssanyu/PAMOJA/blob/master/manuals/PAMOJA_end_user_manual.pdf). PAMOJA has also been used to develop [non-trivial applications](https://github.com/ssanyu/PAMOJA#example-applications). PAMOJA's API documentation can be found in the [javadoc](https://ssanyu.github.io/PAMOJA.github.io/).
 
 # Example Applications
 PAMOJA is being used to develop a couple of non-trivial applications:
