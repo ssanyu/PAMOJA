@@ -3,7 +3,7 @@ PAMOJA is a Java-based component framework providing support for grammar-aware e
 
 In the PAMOJA project we are investigating the development of GAE applications by consciously applying CBSD techniques. Applications range from language front-ends to general software which needs to incorporate GAE processing.
 
-Please note that PAMOJA is a research project and while we do endeavor to create useful and quality software components, there may be bugs and missing functionality. We advise users to use them with caution for "serious" work. We otherwise make no guarantees about the features or performance of PAMOJA.
+**Please note** that PAMOJA is a research project and while we do endeavor to create useful and quality software components, there may be bugs and missing functionality. We advise users to use them with caution for "serious" work. We otherwise make no guarantees about the features or performance of PAMOJA.
 
 # Contact
 Jackline Ssanyu
