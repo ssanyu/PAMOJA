@@ -1,0 +1,35 @@
+;Signature for MinJava
+
+; Sorts ==========================
+Prog = < TermTuple
+Stat = < TermTuple
+Exp = < TermTuple
+FDec  = < TermTuple
+MDec  = < TermTuple
+Cond   = < TermTuple
+Var = < TermTuple
+
+
+;Operators =======================
+;  
+
+ClassDec=T[id:Var,fieldDecs:FDec*,methodDecs:MDec+]<Prog
+FieldDec=T[id:Var] D[dataType:String]<FDec
+MethodDec=T[id:Var,stats:Stat+]<MDec
+While=T[cond:Cond,body:Stat+]<Stat
+Assign=T[id:Var, exp:Exp]<Stat
+If=T[cond:Cond,thenPart:Stat*,elsePart:Stat*]<Stat
+Repeat=T[body:Stat+,cond:Cond]<Stat
+RelCond=T[id:Var] D[rel:String, value:String]<Cond
+NumExp=D[value:String]<Exp
+VarExp=T[id:Var]<Exp
+VarId=D[id:String]<Var
+BExp=T[left:Exp,right:Exp]<Exp
+
+
+
+
+
+
+
+
