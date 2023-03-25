@@ -1,0 +1,772 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Components.GraphView;
+
+
+import Components.Concrete.Parser.IParserComp;
+import Components.INodeObject;
+import FALayout.CFAGraph;
+import FALayout.CStateShape;
+import GrammarNotions.ECFGNodes.CECFGNode;
+import GrammarNotions.RegExpr.CRE;
+import Nodes.CNode;
+import Parsers.CInterpretingRecDescent;
+import Parsers.CLLParser;
+import Parsers.CLRParser;
+import Parsers.CNPDALL;
+import Parsers.CNPDALR;
+import TreeLayout.*;
+import TreeLayout.LLParserVisualizer.CLLTreeNode;
+import TreeLayout.LLParserVisualizer.CTopDownTreeGraph;
+import TreeLayout.LRParseTreeVisualizer.CParseTreeForestGraph;
+import TreeLayout.LRParseTreeVisualizer.CStackNode;
+import TreeLayout.LRParseTreeVisualizer.CTreeForestGraph;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+/**
+ * A component used to view Different kinds of graphs, such as NFA, parse trees and syntax trees,.
+ * It collaborates with other components such as Parsers.
+ * 
+ * @author Jackline Ssanyu (jssanyu@kyu.ac.ug)
+ */
+public class CGraphView extends javax.swing.JPanel implements PropertyChangeListener  {
+    
+    /**
+     *
+     */
+    public IParserComp Parser;
+
+    /**
+     *
+     */
+    public INodeObject NodeObject;
+   /**
+     *
+    */
+    private   CTopDownTreeGraph LLTreeGraph;      
+    private CLLTreeNode LLTree;
+    private CTreeNode treeNode;
+   
+    private CParseTreeForestGraph LRTreeGraph;
+    private CTreeForestGraph NPDALRTreeGraph;
+    private CStackNode LRTree;
+    private CRETreeGraph reTreeGraph;
+    private CParseTreeGraph parseTree;
+        
+    private CTreeGraph tree;
+    
+    //Finite automata
+    private CFAGraph fa;
+    private CRE regularExpresion;
+    private Rectangle rect;  
+
+    /**
+     * Creates new TreeGraghView object.
+     */
+    public CGraphView() { 
+        super();
+        this.setBackground(Color.white);
+        LLTreeGraph=null;
+        LLTree=null;
+        LRTreeGraph=null;
+        NPDALRTreeGraph=null;
+        parseTree=null;
+        LRTree=null;
+        treeNode=null;
+        reTreeGraph=null;
+        fa=null;
+        regularExpresion=null;
+        initComponents();
+        initAddedComponents();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CLLTreeNode getLLTree() {
+        return LLTree;
+    }
+
+    /**
+     *
+     * @param LLTree
+     */
+    public void setLLTree(CLLTreeNode LLTree) {
+        this.LLTree = LLTree;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+
+    /**
+     *
+     */
+    public void clear(){
+        LLTree=null;
+        LRTree=null;
+        treeNode=null;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CStackNode getLRTree() {
+        return LRTree;
+    }
+
+    /**
+     *
+     * @param LRTree
+     */
+    public void setLRTree(CStackNode LRTree) {
+        this.LRTree = LRTree;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+   
+    /**
+     *
+     * @return
+     */
+    public CRE getRegularExpresion() {
+        return regularExpresion;
+   }
+
+    /**
+     *
+     * @param re
+     */
+    public void setRegularExpresion(CRE re) {
+        regularExpresion = re;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+        enableFAOptions();
+   }
+
+    /**
+     *
+     * @param aNode
+     */
+    public void updateParserVisualizer(CNode aNode) {
+        
+       treeNode=transformTree((CRE)aNode); 
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+    
+    /**
+     *
+     * @param aStackTree
+     */
+    public void updateParserVisualizer(CLLTreeNode aStackTree) {
+        LLTree=aStackTree;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+
+    /**
+     *
+     * @param aLRTree
+     */
+    public void updateParserVisualizer(CStackNode aLRTree) {
+        LRTree=aLRTree;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){
+         paintComponent(g);
+        }
+    }
+       
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        displayPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        HSlider = new javax.swing.JSlider();
+        lblTreeAlign = new javax.swing.JLabel();
+        cmbAlign = new javax.swing.JComboBox();
+        lblNodeStyle = new javax.swing.JLabel();
+        cmbNodeStyle = new javax.swing.JComboBox();
+        lblStateShape = new javax.swing.JLabel();
+        cmbStateStyle = new javax.swing.JComboBox();
+        jPanel2 = new javax.swing.JPanel();
+        VSlider = new javax.swing.JSlider();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
+        displayPanel.setBackground(new java.awt.Color(255, 255, 255));
+        displayPanel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
+        displayPanel.setLayout(displayPanelLayout);
+        displayPanelLayout.setHorizontalGroup(
+            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        displayPanelLayout.setVerticalGroup(
+            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 522, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+
+        HSlider.setPaintTicks(true);
+        HSlider.setToolTipText("Horizontal tree spacing");
+        HSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                HSliderStateChanged(evt);
+            }
+        });
+
+        lblTreeAlign.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTreeAlign.setText("Tree Alignment:");
+
+        cmbAlign.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Top ", "Bottom " }));
+        cmbAlign.setSelectedIndex(1);
+        cmbAlign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAlignActionPerformed(evt);
+            }
+        });
+
+        lblNodeStyle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNodeStyle.setText("Node Style:");
+
+        cmbNodeStyle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rectangle", "Oval" }));
+
+        lblStateShape.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblStateShape.setText("State Shape:");
+
+        cmbStateStyle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Oval", "Rectangle" }));
+        cmbStateStyle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStateStyleActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblTreeAlign, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbAlign, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNodeStyle, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbNodeStyle, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblStateShape, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbStateStyle, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 57, Short.MAX_VALUE))
+            .addComponent(HSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTreeAlign, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmbAlign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNodeStyle, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbNodeStyle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblStateShape, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cmbStateStyle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(HSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+
+        VSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        VSlider.setPaintTicks(true);
+        VSlider.setToolTipText("Vertical tree spacing");
+        VSlider.setInverted(true);
+        VSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                VSliderStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(VSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addComponent(VSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void VSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_VSliderStateChanged
+        // TODO add your handling code here:
+        if(LLTree!=null){
+         LLTreeGraph.setVSpace(VSlider.getValue());
+        }else if(LRTree!=null && NPDALRTreeGraph!=null){
+          NPDALRTreeGraph.setVSpace(VSlider.getValue());
+        }else if(LRTree!=null && LRTreeGraph!=null){
+          LRTreeGraph.setVSpace(VSlider.getValue());
+        }else if(treeNode!=null){
+          tree.setVSpace(VSlider.getValue());
+        }else if(fa!=null){
+          fa.setvSpace(VSlider.getValue());
+        }
+        Graphics g=drawingPanel.getGraphics();
+        drawingPanel.paintComponent(g);  
+        
+    }//GEN-LAST:event_VSliderStateChanged
+
+    private void HSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HSliderStateChanged
+        // TODO add your handling code here:
+        if(LLTree!=null){
+         LLTreeGraph.setHSpace(HSlider.getValue());
+        }else if(LRTree!=null && NPDALRTreeGraph!=null){
+          NPDALRTreeGraph.setHSpace(HSlider.getValue());
+        }else if(LRTree!=null && LRTreeGraph!=null){
+          LRTreeGraph.setHSpace(HSlider.getValue());
+        }else if(treeNode!=null){
+          tree.setHSpace(HSlider.getValue());
+        }else if(fa!=null){
+          fa.sethSpace(VSlider.getValue());
+        }
+        Graphics g=drawingPanel.getGraphics();
+        drawingPanel.paintComponent(g);
+    }//GEN-LAST:event_HSliderStateChanged
+
+    private void cmbAlignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAlignActionPerformed
+        // TODO add your handling code here:
+        Graphics g=drawingPanel.getGraphics();
+        drawingPanel.paintComponent(g);
+    }//GEN-LAST:event_cmbAlignActionPerformed
+ 
+    private void cmbStateStyleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStateStyleActionPerformed
+        // TODO add your handling code here:
+        int i=cmbStateStyle.getSelectedIndex();
+        if(i==0){
+            fa.setStateShape(CStateShape.OVAL);
+            Graphics g=drawingPanel.getGraphics();
+            drawingPanel.paintComponent(g);
+        }else if(i==1){
+            fa.setStateShape(CStateShape.RECTANGLE);
+            Graphics g=drawingPanel.getGraphics();
+            drawingPanel.paintComponent(g);
+        }
+    }//GEN-LAST:event_cmbStateStyleActionPerformed
+/* */
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSlider HSlider;
+    private javax.swing.JSlider VSlider;
+    private javax.swing.JComboBox cmbAlign;
+    private javax.swing.JComboBox cmbNodeStyle;
+    private javax.swing.JComboBox cmbStateStyle;
+    private javax.swing.JPanel displayPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblNodeStyle;
+    private javax.swing.JLabel lblStateShape;
+    private javax.swing.JLabel lblTreeAlign;
+    // End of variables declaration//GEN-END:variables
+
+     
+    /**
+     * Handles property change events. If the property change is from a component containing a node object, retrieves its node object, and updates its view. 
+     * 
+     * @param evt event object with the new value
+     */
+   @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Object source=evt.getSource();
+        String property=evt.getPropertyName();
+        CLLTreeNode ln=null;
+        CStackNode rn=null;
+        CTreeNode vTreeNode=null;
+        if(source==Parser){
+            if(Parser.getParser() instanceof CInterpretingRecDescent){
+                CInterpretingRecDescent p=(CInterpretingRecDescent)Parser.getParser();
+                parseTree=new CParseTreeGraph();
+                treeNode=parseTree.ParseTreetoTreeNode((CECFGNode)p.getParserResult().getNode());
+                setTreeNode(treeNode);
+            }else if(property.equals("Tree")&& Parser.getParser() instanceof CLLParser){
+                CLLParser p= (CLLParser)Parser.getParser();
+                LLTreeGraph=new CTopDownTreeGraph();
+                ln=new CLLTreeNode(p.getTree(),p.getTreeStack(),p.getMatchedNodes(),LLTreeGraph.StackSymbolListtoStackNodesList(p.getStack().getList()),LLTreeGraph.SymbolStreamtoTreeNodeList(p.getSymbolsUnmatched()));
+                updateParserVisualizer(ln);
+            }else if (property.equals("Tree")&& Parser.getParser() instanceof CNPDALL){
+                CNPDALL p= (CNPDALL)Parser.getParser();
+                LLTreeGraph=new CTopDownTreeGraph();
+                ln=new CLLTreeNode(p.getfTree(),p.getTreeStack(),p.getMatchedNodes(),LLTreeGraph.StackSymbolListtoStackNodesList(p.getStack().getList()),LLTreeGraph.SymbolStreamtoTreeNodeList(p.getSymbolsUnmatched()));
+                updateParserVisualizer(ln);
+            }else if(property.equals("NodeStack")&& Parser.getParser() instanceof CLRParser){
+                CLRParser p= (CLRParser)Parser.getParser();
+                LRTreeGraph=new CParseTreeForestGraph();
+                ArrayList<CTreeNode> t = LRTreeGraph.StatesListtoStackNodesList(p.getStack().getList());
+                ArrayList<CTreeNode> s=LRTreeGraph.SymbolStreamtoTreeNodeList(p.getSymbolsUnmatched());
+                ArrayList<CTreeNode> tn=LRTreeGraph.ListECFGNodetoListTreeNode(p.getNodeStack());
+                rn=new CStackNode(t,s,CNodeStyle.RECTANGLE,CEdgeStyle.FAN,Color.BLACK,"",tn);
+                updateParserVisualizer(rn);
+            }else if(property.equals("ParseTree")&& Parser.getParser() instanceof CLRParser){
+                CLRParser p= (CLRParser)Parser.getParser();
+                parseTree=new CParseTreeGraph();
+                vTreeNode=parseTree.ParseTreetoTreeNode((CECFGNode)p.getParserResult().getNode());
+                setTreeNode(vTreeNode);
+                  
+            }else if(property.equals("TreeStack")&& Parser.getParser() instanceof CNPDALR){
+                CNPDALR p=(CNPDALR)Parser.getParser();
+                NPDALRTreeGraph=new CTreeForestGraph();
+                ArrayList<CTreeNode> t = NPDALRTreeGraph.StatesListtoStackNodesList1(p.getStack().getList());
+                ArrayList<CTreeNode> s=NPDALRTreeGraph.SymbolStreamtoTreeNodeList(p.getSymbolsUnmatched());
+                ArrayList<CTreeNode> tn=p.getTreeStack(); 
+                rn=new CStackNode(t,s,CNodeStyle.RECTANGLE,CEdgeStyle.FAN,Color.BLACK,"",tn);
+                updateParserVisualizer(rn);
+           }
+        }else if(source==NodeObject){
+            CNode vNode=null;
+            vNode=NodeObject.getNode();
+            if(vNode!=null){
+                //if(vNode instanceof CECFGNode){
+                //    setNode(parseTreeGraph.ECFGNodetoTreeNode((CECFGNode)vNode));
+               // }else 
+                if(vNode instanceof CRE){
+                    setTreeNode(reTreeGraph.RENodetoTreeNode((CRE)vNode)); 
+                }//else if(vNode instanceof CNode){
+                 //setNode(astTreeGraph.ASTNodetoTreeNode((CNode)vNode)); 
+                
+               // }else{
+                JOptionPane.showMessageDialog(this,
+                "Tree Graph View, This kind of tree not supported yet","Invalid Tree",
+                 JOptionPane.ERROR_MESSAGE); 
+                }
+            }
+        
+    } 
+
+    /**
+     *
+     * @param treeNode
+     */
+    public void setTreeNode(CTreeNode treeNode) {
+        this.treeNode = null;
+        this.treeNode=treeNode;
+        Graphics g=drawingPanel.getGraphics();
+        if(g!=null){ 
+         paintComponent(g);
+        }
+       
+    }
+    /**
+     * Get the value of NodeObject
+     *
+     * @return the value of NodeObject
+     */
+    public INodeObject getNodeObject(){
+        return NodeObject;
+    }
+    /**
+     * Connects to any component holding a node object via its interface -- Set the value of <code>NodeObject</code>.
+     * Register for property change events, retrieve current value of a node object and update the treegraph view.
+     *
+     * @param aNodeObject new value of NodeObject
+     */
+   public void setNodeObject(INodeObject aNodeObject){
+       CTreeNode vNode=null;
+       
+       if(NodeObject!=null){
+              NodeObject.removePropertyChangeListener(this);
+       }
+       NodeObject=aNodeObject;
+       if(NodeObject!=null){
+              NodeObject.addPropertyChangeListener(this);
+              vNode=transformTree(NodeObject.getNode());
+       } 
+        setTreeNode(vNode);
+       
+   }
+
+    /**
+     *
+     * @return
+     */
+    public IParserComp getParser() {
+        return Parser;
+    }
+
+    /**
+     *
+     * @param aParser
+     */
+    public void setParser(IParserComp aParser) {
+          
+       if(Parser!=null){
+              Parser.removePropertyChangeListener(this);
+       }
+       Parser=aParser;
+       if(Parser!=null){
+              Parser.addPropertyChangeListener(this);
+                           
+       } else {
+            this.Parser.removePropertyChangeListener(this);
+       } 
+       
+       disableFAOptions();
+    }
+    private DrawingPanel drawingPanel;
+
+    /**
+     *
+     */
+    
+   
+    private class DrawingPanel extends JPanel{
+        public DrawingPanel(){
+            
+            setBackground(Color.white); // set the background color to white
+            //setPreferredSize(new Dimension(300, 200));
+
+           
+        }
+        /**
+         * Updates the TreeGraphView.
+         */
+        public void upDateSettings(){
+            int i=cmbAlign.getSelectedIndex();
+           if(LLTree!=null){
+            LLTreeGraph.setHSpace(HSlider.getValue());
+            LLTreeGraph.setVSpace(VSlider.getValue());
+            LLTreeGraph.setMargin(4);
+           // tree.setDrawBoundingBoxes(drawBoundBoxCheckBox.isSelected());
+            if(i==0){
+              LLTreeGraph.setSubTreeAlignment(CHorizontalAlignment.TOPALIGNED);
+            }else if (i==1){
+               LLTreeGraph.setSubTreeAlignment(CHorizontalAlignment.BOTTOMALIGNED);
+            }
+           }else if(LRTree!=null && NPDALRTreeGraph!=null){
+            NPDALRTreeGraph.setHSpace(HSlider.getValue());
+            NPDALRTreeGraph.setVSpace(VSlider.getValue());
+            NPDALRTreeGraph.setMargin(4);
+           // tree.setDrawBoundingBoxes(drawBoundBoxCheckBox.isSelected());
+           if(i==0){
+              NPDALRTreeGraph.setSubTreeAlignment(CHorizontalAlignment.TOPALIGNED);
+            }else if (i==1){
+               NPDALRTreeGraph.setSubTreeAlignment(CHorizontalAlignment.BOTTOMALIGNED);
+            }
+             
+           }else if(LRTree!=null && LRTreeGraph!=null){
+            LRTreeGraph.setHSpace(HSlider.getValue());
+            LRTreeGraph.setVSpace(VSlider.getValue());
+            LRTreeGraph.setMargin(4);
+           // tree.setDrawBoundingBoxes(drawBoundBoxCheckBox.isSelected());
+            if(i==0){
+               LRTreeGraph.setSubTreeAlignment(CHorizontalAlignment.TOPALIGNED);
+            }else if (i==1){
+               LRTreeGraph.setSubTreeAlignment(CHorizontalAlignment.BOTTOMALIGNED);
+            }
+           }else if(tree!=null){
+             disableFAOptions();
+             tree.setHSpace(HSlider.getValue());
+             tree.setVSpace(VSlider.getValue());
+             tree.setMargin(4); 
+             if(i==0){
+               tree.setSubTreeAlignment(CHorizontalAlignment.TOPALIGNED);
+            }else if (i==1){
+               tree.setSubTreeAlignment(CHorizontalAlignment.BOTTOMALIGNED);
+            }
+           }else if(fa!=null){
+            fa.sethSpace(HSlider.getValue());
+            fa.setvSpace(VSlider.getValue());
+            fa.setuSpace(25); 
+            fa.setwSpace(55);  
+            fa.setrSize(15);  
+            if(cmbStateStyle.getSelectedIndex()==0){
+                fa.setStateShape(CStateShape.OVAL);
+            }else if(cmbStateStyle.getSelectedIndex()==1){
+                fa.setStateShape(CStateShape.RECTANGLE);
+            }
+           }
+        }
+     /**
+      * Draws the LLTreeGraphragh with the specified graphics object.
+      * 
+      * @param g the specified Graphics context. 
+      */
+        public void doDrawing(Graphics g) {
+            if(LLTree!=null){
+                 LLTreeGraph =new CTopDownTreeGraph(LLTree); 
+                 upDateSettings();
+                 LLTreeGraph.calculateLayout(g);
+                 rect=new Rectangle(0,0,Math.max(100, LLTreeGraph.getTreeNode().getTreeWidth()+50),LLTreeGraph.getTreeNode().getTreeHeight()+50);
+                 drawingPanel.setBounds(rect);
+                 LLTreeGraph.draw(g);
+              }else if(LRTree!=null && NPDALRTreeGraph!=null){
+                NPDALRTreeGraph=new CTreeForestGraph(LRTree,null); 
+                upDateSettings();
+                NPDALRTreeGraph.calculateLayout(g);
+                rect=new Rectangle(0,0,Math.max(100, NPDALRTreeGraph.getStackRoot().getWidth()+ NPDALRTreeGraph.getStackRoot().getSymWidth())+50,NPDALRTreeGraph.getStackRoot().getWidth()+ NPDALRTreeGraph.getStackRoot().getSymWidth()+50);
+                drawingPanel.setBounds(rect);
+                NPDALRTreeGraph.draw(g);
+              }else if(LRTree!=null && LRTreeGraph!=null){
+                LRTreeGraph=new CParseTreeForestGraph(LRTree,null); 
+                upDateSettings();
+                LRTreeGraph.calculateLayout(g);
+                rect=new Rectangle(0,0,Math.max(100, LRTreeGraph.getStackRoot().getWidth()+ LRTreeGraph.getStackRoot().getSymWidth())+50,LRTreeGraph.getStackRoot().getWidth()+ LRTreeGraph.getStackRoot().getSymWidth()+50);
+                drawingPanel.setBounds(rect);
+                LRTreeGraph.draw(g);
+              }else if(treeNode!=null){
+             tree = new CTreeGraph(treeNode);
+             upDateSettings();
+             tree.calculateLayout(g);
+            //drawingPanel.setPreferredSize(new Dimension(Math.max(100, tree.getRoot().getWidth()),tree.getRoot().getHeight()+30));
+             rect=new Rectangle(0,0,Math.max(100, tree.getRoot().getWidth())+30,tree.getRoot().getHeight()+30);
+             drawingPanel.setBounds(rect);
+             tree.draw(g);
+            }else if(regularExpresion!=null){
+                fa=new CFAGraph();          
+                fa.setRe(regularExpresion); 
+                upDateSettings();
+                fa.calculateLayout(g); 
+                drawingPanel.setBounds(0,0,Math.max(100, fa.getWidth()+250),Math.max(100, fa.getHeight()+250));
+                fa.draw(g);
+            }else{ 
+                rect=new Rectangle(0,0,100,100);
+            // drawingPanel.revalidate();
+           }
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            doDrawing(g);
+            repaint();
+        }
+       @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(300, 200);
+        } 
+    }
+    private void initAddedComponents() {
+        // place initialization code for panels here
+        /*drawingPanel=new DrawingPanel();
+        displayPanel.setSize(20, 20);
+
+        JScrollPane scrollPane = new JScrollPane(drawingPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        displayPanel.setLayout(new BorderLayout());
+        displayPanel.add(scrollPane);
+
+        displayPanel.setVisible(true); */ 
+        drawingPanel=new DrawingPanel();
+        JScrollPane sp = new JScrollPane();
+        sp.setViewportView(drawingPanel);
+        displayPanel.setLayout(new BorderLayout());
+        displayPanel.add(sp,BorderLayout.CENTER);
+        displayPanel.setPreferredSize(new Dimension(100,100)); 
+    }
+     /**
+     * Returns a graph generated from the specified node.
+     * 
+     * @param aNode the node to transform into a graph.
+     * @return the graph corresponding to the node specified.
+     */
+    public CTreeNode transformTree(CNode aNode){
+       treeNode=null;
+       if(aNode !=null){
+           // if(aNode instanceof CECFGNode){
+                  //  return parseTreeGraph.ECFGNodetoTreeNode((CECFGNode)aNode);  
+           // }else 
+           if(aNode instanceof CRE){
+                    reTreeGraph=new CRETreeGraph(treeNode);
+                    return reTreeGraph.RENodetoTreeNode((CRE)aNode);   
+           // }else if(aNode instanceof CNode){
+               // return astTreeGraph.ASTNodetoTreeNode((CNode)aNode);
+            }else return treeNode;
+       }else return treeNode;
+  }
+    
+    private void disableFAOptions(){
+        lblStateShape.setEnabled(false);
+        cmbStateStyle.setEnabled(false);
+        lblTreeAlign.setEnabled(true);
+        cmbAlign.setEnabled(true);
+        lblNodeStyle.setEnabled(true);
+        cmbNodeStyle.setEnabled(true);
+    }
+    private void enableFAOptions(){
+        lblStateShape.setEnabled(true);
+        cmbStateStyle.setEnabled(true);
+        lblTreeAlign.setEnabled(false);
+        cmbAlign.setEnabled(false);
+        lblNodeStyle.setEnabled(false);
+        cmbNodeStyle.setEnabled(false);
+    }
+    }
