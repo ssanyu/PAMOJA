@@ -9,9 +9,10 @@ In the PAMOJA project we are investigating the development of GAE applications b
 # Contact
 Jackline Ssanyu
 
-jssanyu@kyu.ac.ug 
-jackie_ssanyu@yahoo.com
-
+\begin{html}
+\hi jssanyu@kyu.ac.ug 
+\hi jackie_ssanyu@yahoo.com
+\end{html}
 https://github.com/ssanyu
 
 # Downloads
