@@ -9,11 +9,8 @@ In the PAMOJA project we are investigating the development of GAE applications b
 # Contact
 Jackline Ssanyu
 
-\begin{html}
-\hi jssanyu@kyu.ac.ug 
-\hi jackie_ssanyu@yahoo.com
-\end{html}
-https://github.com/ssanyu
+jssanyu@kyu.ac.ug 
+jackie_ssanyu@yahoo.com
 
 # Downloads
 PAMOJA components have been packaged in a JAR and the wizards as NBM modules.
